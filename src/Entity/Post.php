@@ -62,9 +62,9 @@ class Post
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getAuthor(): string {
+    public function getAuthor(): ? string {
         return $this->author;
     }
 
@@ -78,9 +78,9 @@ class Post
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getTitle(): string {
+    public function getTitle(): ? string {
         return $this->title;
     }
 
@@ -94,9 +94,9 @@ class Post
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getText(): string {
+    public function getText(): ? string {
         return $this->text;
     }
 

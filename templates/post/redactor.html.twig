@@ -1,5 +1,6 @@
 {# @var pots \App\Entity\Post #}
 
+{#
 <div class="form-group">
     <label class="col-lg-4 col-lg-offset-4">
         Author
@@ -21,5 +22,11 @@
     </label>
 </div>
 <button type="submit" class="btn btn-success col-lg-offset-7">
+    {{ post is defined ? 'Save' : 'Create' }}
+</button>
+#}
+
+{{ form_widget(form) }}
+<button type="submit" class="btn btn-success">
     {{ post is defined ? 'Save' : 'Create' }}
 </button>
