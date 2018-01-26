@@ -7,49 +7,54 @@
 {% block body %}
     <div class="col-md-2"></div>
     <div class="col-md-8 ">
-    {% for post in posts if posts is not null %}
-        <div id="postlist">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <div class="text-center">
-                        <div class="row">
-                            <div class="col-sm-9">
-                                <a href="{{ path('post_show', {'post': post.id}) }}">
-                                    <h3 class="pull-left">
-                                        {{ post.title }}</h3>
-                                </a>
-                            </div>
-                            <div class="col-sm-3">
-                                <h4 class="pull-right">
-                                    <small><em>{{ post.createdAt.format('M j Y') }}
-                                            <br>{{ post.createdAt.format('g:ia') }}</em></small>
-                                </h4>
+        {% for post in posts if posts is not null %}
+            <div id="postlist">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="text-center">
+                            <div class="row">
+                                <div class="col-sm-9">
+                                    <a href="{{ path('post_show', {'post': post.id}) }}">
+                                        <h3 class="pull-left">
+                                            {{ post.title }}</h3>
+                                    </a>
+                                </div>
+                                <div class="col-sm-3">
+                                    <h4 class="pull-right">
+                                        <small><em>{{ post.createdAt.format('M j Y') }}
+                                                <br>{{ post.createdAt.format('g:ia') }}</em></small>
+                                    </h4>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="panel-body">
-                    <p>{{ post.text }}</p>
-                    <div class="pull-right">
-                        <span><small>{{ post.author }}</small></span>
+                    <div class="panel-body">
+                        {% if post.previewable %}
+                            <p>{{ post.textPreview }}</p>
+                            <p><a href="{{ path('post_show', {'post': post.id}) }}"> read more</a></p>
+                        {% else %}
+                            <p>{{ post.text }}</p>
+                        {% endif %}
+                        <div class="pull-right">
+                            <span><small>{{ post.author }}</small></span>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <a class="btn btn-warning"
+                           href="{{ path('post_edit', {'post': post.id}) }}">
+                            Edit
+                        </a>
+                        <a class="btn btn-danger"
+                           href="{{ path('post_delete', {'post': post.id}) }}">
+                            Delete
+                        </a>
                     </div>
                 </div>
-                <div class="panel-footer">
-                    <a class="btn btn-warning"
-                       href="{{ path('post_edit', {'post': post.id}) }}">
-                        Edit
-                    </a>
-                    <a class="btn btn-danger"
-                       href="{{ path('post_delete', {'post': post.id}) }}">
-                        Delete
-                    </a>
-                </div>
             </div>
-        </div>
-    {% else %}
-        <p>There are no posts</p>
-    {% endfor %}
+        {% else %}
+            <p>There are no posts</p>
+        {% endfor %}
         {# pagination tool #}
         {{ knp_pagination_render(posts) }}
     </div>
-    {% endblock %}
+{% endblock %}

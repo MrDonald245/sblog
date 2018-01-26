@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Post
 {
+    private const PREVIEW_LENGTH = 300;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -123,7 +125,6 @@ class Post
         return $this->updatedAt;
     }
 
-
     /**
      *
      * @ORM\PrePersist
@@ -135,5 +136,34 @@ class Post
         if ($this->createdAt == null) {
             $this->createdAt = new DateTime('now');
         }
+    }
+
+    /**
+     * Makes a post's text up to Post::PREVIEW_LENGTH symbols,
+     * showing the last sentence.
+     *
+     * @return string
+     */
+    public function getTextPreview(): string {
+        $result = $this->text;
+        $result = substr($result, 0, self::PREVIEW_LENGTH);
+
+        if (strpos($result, '.')) {
+            $result = explode('.', $result);
+            array_pop($result);
+            $result = implode('', $result);
+            $result .= '.';
+        }
+
+        return $result;
+    }
+
+    /**
+     * Simply shows if a post's text long enough to be previewed.
+     *
+     * @return bool
+     */
+    public function isPreviewable(): bool {
+        return strlen($this->text) >= self::PREVIEW_LENGTH;
     }
 }
