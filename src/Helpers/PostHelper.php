@@ -12,6 +12,10 @@ use Psr\Container\ContainerInterface;
 class PostHelper
 {
     /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+    /**
      * @var PostRepository
      */
     private $postRepository;
@@ -28,6 +32,7 @@ class PostHelper
      * @throws \Psr\Container\NotFoundExceptionInterface
      */
     public function __construct(EntityManagerInterface $entityManager, ContainerInterface $container) {
+        $this->entityManager = $entityManager;
         $this->postRepository = $entityManager->getRepository(Post::class);
         $this->paginator = $container->get('knp_paginator');
     }
@@ -40,5 +45,21 @@ class PostHelper
     public function getAll(int $page = 1, int $limit = 3
     ): PaginationInterface {
         return $this->paginator->paginate($this->postRepository->getAllQuery(), $page, $limit);
+    }
+
+    /**
+     * @param Post $post
+     */
+    public function save(Post $post): void {
+        $this->entityManager->persist($post);
+        $this->entityManager->flush();
+    }
+
+    /**
+     * @param Post $post
+     */
+    public function remove(Post $post): void {
+        $this->entityManager->remove($post);
+        $this->entityManager->flush();
     }
 }
