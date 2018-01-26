@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{# @var post \App\Entity\Post #}
+
+{% block title %} {{ post.title }} {% endblock %}
+
+{% block body %}
+    <div id="postlist">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="text-center">
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <h3 class="pull-left">
+                                {{ post.title }}</h3>
+                        </div>
+                        <div class="col-sm-3">
+                            <h4 class="pull-right">
+                                <small><em>{{ post.createdAt.format('M j Y') }}
+                                        <br>{{ post.createdAt.format('g:ia') }}</em></small>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <p>{{ post.text }}</p>
+                <div class="pull-right">
+                    <span><small>{{ post.author }}</small></span>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <a class="btn btn-warning"
+                   href="{{ path('post_edit', {'post': post.id}) }}">
+                    Edit
+                </a>
+                <a class="btn btn-danger"
+                   href="{{ path('post_delete', {'post': post.id}) }}">
+                    Delete
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

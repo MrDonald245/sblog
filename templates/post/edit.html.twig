@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{# @var post \App\Entity\Post #}
+
+{% block title %} edit {{ post.title }} {% endblock %}
+
+{% block body %}
+    <form class="form-horizontal" action="{{ path('post_edit', {'post': post.id}) }}" method="POST">
+        {% include 'post/redactor.html.twig' %}
+    </form>
+{% endblock %}

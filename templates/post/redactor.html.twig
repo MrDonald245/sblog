@@ -1,0 +1,25 @@
+{# @var pots \App\Entity\Post #}
+
+<div class="form-group">
+    <label class="col-lg-4 col-lg-offset-4">
+        Author
+        <input type="text" class="form-control" name="author"
+               value="{{ post.author is defined ? post.author : '' }}">
+    </label>
+    <label class="col-lg-4 col-lg-offset-4">
+        Title
+        <input type="text" class="form-control" name="title"
+               value="{{ post.title is defined ? post.title : '' }}">
+    </label>
+</div>
+<div class="form-group">
+    <label class="col-lg-4 col-lg-offset-4">
+        Text
+        <textarea rows="6" class="form-control" name="text">
+            {{ post.text is defined ? post.text : '' }}
+        </textarea>
+    </label>
+</div>
+<button type="submit" class="btn btn-success col-lg-offset-7">
+    {{ post is defined ? 'Save' : 'Create' }}
+</button>
