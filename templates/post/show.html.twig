@@ -41,4 +41,43 @@
             </div>
         </div>
     </div>
+    {% if not post.comments.empty %}
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>Comments</h3>
+            </div><!-- /col-sm-12 -->
+        </div><!-- /row -->
+    {% endif %}
+    {# Comment form #}
+    <div class="row">
+        <div class="col-md-8 span-2">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-success">Add</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+    </br>
+    {# @var comment \App\Entity\Comment #}
+    {% for comment in post.comments %}
+        <div class="row">
+            <div class="col-sm-1">
+                <div class="thumbnail">
+                    <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                </div><!-- /thumbnail -->
+            </div><!-- /col-sm-1 -->
+            <div class="col-sm-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>{{ comment.author }}</strong>
+                        <span class="text-muted">commented on {{ comment.createdAt.format('M j Y g:ia') }}</span>
+                    </div>
+                    <div class="panel-body">
+                        {{ comment.text }}
+                    </div><!-- /panel-body -->
+                </div><!-- /panel panel-default -->
+            </div><!-- /col-sm-5 -->
+        </div><!-- /row -->
+    {% endfor %}
+
 {% endblock %}

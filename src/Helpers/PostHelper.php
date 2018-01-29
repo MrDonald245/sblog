@@ -42,8 +42,7 @@ class PostHelper
      * @param int|null $limit
      * @return PaginationInterface
      */
-    public function getAll(int $page = 1, int $limit = 3
-    ): PaginationInterface {
+    public function getAll(int $page = 1, int $limit = 3): PaginationInterface {
         return $this->paginator->paginate($this->postRepository->getAllQuery(), $page, $limit);
     }
 

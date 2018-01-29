@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -55,6 +57,21 @@ class Post
      * @var DateTime
      */
     private $updatedAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post", cascade={"persist"})
+     * @ORM\OrderBy({"createdAt" = "DESC"})
+     *
+     * @var ArrayCollection
+     */
+    private $comments;
+
+    /**
+     * Post constructor.
+     */
+    public function __construct() {
+        $this->comments = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -126,11 +143,53 @@ class Post
     }
 
     /**
+     * @return ArrayCollection
+     */
+    public function getComments(): Collection {
+        return $this->comments;
+    }
+
+    /**
+     * @param ArrayCollection $comments
+     * @return Post
+     */
+    public function setComments(ArrayCollection $comments): Post {
+        $this->comments = $comments;
+        return $this;
+    }
+
+    /**
+     * @param Comment $comment
+     * @return bool
+     */
+    public function addComment(Comment $comment): bool {
+        if ($this->comments->contains($comment)) {
+            return false;
+        }
+
+        $this->comments->add($comment);
+        $comment->setPost($this);
+
+        return true;
+    }
+
+    public function removeComment(Comment $comment): bool {
+        if (!$this->comments->contains($comment)) {
+            return false;
+        }
+
+        $this->comments->removeElement($comment);
+        $comment->removePost($this);
+
+        return true;
+    }
+
+    /**
      *
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
-    public function updatedTimestamps() {
+    public function updatedTimestamps(): void {
         $this->updatedAt = new DateTime('now');
 
         if ($this->createdAt == null) {

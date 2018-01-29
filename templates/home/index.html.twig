@@ -48,6 +48,9 @@
                            href="{{ path('post_delete', {'post': post.id}) }}">
                             Delete
                         </a>
+                        <div class="pull-right">
+                            <p><span><b>{{ post.comments.count }}</b> comments</span></p>
+                        </div>
                     </div>
                 </div>
             </div>

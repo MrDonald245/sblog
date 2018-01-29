@@ -18,10 +18,11 @@ class PostRepository extends ServiceEntityRepository
      * @param string $order
      * @return \Doctrine\ORM\Query
      */
-    public function getAllQuery(string $order = 'DESC'): Query {
+    public function getAllQuery(string $order = 'ASC'): Query {
         return $this->createQueryBuilder('p')
             ->orderBy('p.createdAt', $order)
-            ->orderBy('p.updatedAt', $order)
+            ->addOrderBy('p.updatedAt', $order)
+            ->addOrderBy('p.id', $order)
             ->getQuery();
     }
 }

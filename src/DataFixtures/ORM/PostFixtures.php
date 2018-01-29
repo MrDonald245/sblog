@@ -8,13 +8,21 @@
 
 namespace App\DataFixtures\ORM;
 
-
 use App\Entity\Post;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class PostFixtures extends Fixture
 {
+    /**
+     * @return array of dependencies
+     */
+    public function getDependencies() {
+        return [
+            CommentFixtures::class,
+        ];
+    }
+
     /**
      * @var int
      */
@@ -42,8 +50,8 @@ class PostFixtures extends Fixture
                                 Donec malesuada velit vitae eleifend luctus. Quisque ut ex pharetra turpis 
                                 condimentum feugiat. Morbi sed pulvinar ex. Integer molestie non eros et laoreet. 
                                 Pellentesque et feugiat purus. Duis vulputate pharetra dui gravida dictum. 
-                                Suspendisse potenti.');
-
+                                Suspendisse potenti.')
+                ->addComment($this->getReference('comment'));
             $manager->persist($post);
         }
 

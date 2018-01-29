@@ -22,6 +22,8 @@ class HomeController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(int $page = 1, PostHelper $helper) {
+        $posts = $helper->getAll($page);
+
         return $this->render('home/index.html.twig', ['posts' => $helper->getAll($page)]);
     }
 }
